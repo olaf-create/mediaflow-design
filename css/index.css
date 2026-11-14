@@ -1,0 +1,7 @@
+/* @mediaflow/design — import once from the app's globals.css, after `@import "tailwindcss";`.
+ * Order matters: Beautiful UI first, then the Mediaflow token values, which must win. */
+@import "./beautifui/foundation.css";
+@import "./beautifui/records-table.css";
+@import "./beautifui/sidebar-nav.css";
+@import "./brand.css";
+@import "./app-shell.css";

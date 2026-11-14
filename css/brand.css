@@ -1,0 +1,135 @@
+/* Mediaflow corporate design on top of Beautiful UI.
+ * Source: Mediaflow Design Manual v2 (brand.mediaflow.site, compiled 2026-09-21), §3 Colour, §4 Typography.
+ * Only token values are overridden here; ./beautifui stays as vendored.
+ * Values marked [derived] are not in the manual: lighter/darker steps between brand colours,
+ * chosen for a dense working tool (the manual's surfaces are made for marketing pages). */
+
+:root {
+  /* surfaces — warm, ivory-based neutrals */
+  --page: #f7f4f1; /* [derived] lightened Warm Ivory #EEE8E2 */
+  --canvas: #f1ece7; /* [derived] */
+  --surface: #ffffff;
+  --inset: #faf8f6; /* [derived] */
+  --hover: #f3f0ec; /* [derived] */
+  --hover-2: #e9e5e0; /* [derived] */
+
+  /* ink — Brand Black and the warm grey scale */
+  --ink: #1c1c1b; /* Brand Black, never #000 */
+  --ink-2: #696663; /* grey-600, AA on white */
+  --ink-3: #82807c; /* grey-500 */
+
+  /* borders */
+  --line: #e9e6e2; /* [derived] between grey-100 and ivory */
+  --line-strong: #cdcbc9; /* grey-200 */
+  --line-soft: #f0ede9; /* [derived] */
+  /* input fields: white with a visible edge, so they stand out from the ivory page */
+  --field: #ffffff;
+  --shadow-inset-field: inset 0 0 0 1px var(--line-strong), inset 0 1px 2px rgb(28 28 27 / 0.06);
+  /* no background pattern: the brand uses flat colour areas only (manual §3.7, §8) */
+  --stripe: transparent;
+  --stripe-bg: var(--page);
+
+  /* accent — Mediaflow Blue, used sparingly */
+  --accent: #0e73dc; /* blue-200 */
+  --accent-ink: #094b90; /* blue-300, text and links */
+  --accent-tint: #dcebfc; /* [derived] lighter than blue-100 #C1DDFB for selected rows */
+
+  /* semantic — brand families; the 300 shades, because these colours are also used as text */
+  --green: #115541; /* green-300 */
+  --green-tint: #c6f4e6; /* green-100 */
+  --orange: #992700; /* orange-300 */
+  --orange-tint: #ffd4c6; /* orange-100 */
+  --red: #a2063a; /* pink-300 */
+  --red-tint: #fedde8; /* pink-100 */
+
+  --tooltip-bg: #1c1c1b;
+  --tooltip-fg: #ffffff;
+  --tooltip-muted: #9b9895; /* grey-400 */
+  --tooltip-border: #363432; /* grey-800 */
+  /* tones — brand accent families for colour-coding meaning (areas, tiers, statuses).
+   * key = 200 (icons, marks), tint = 100 (chip backgrounds), ink = 300 (text on tint). */
+  --tone-blue: #0e73dc;   --tone-blue-tint: #dcebfc;   --tone-blue-ink: #094b90;
+  --tone-pink: #e70853;   --tone-pink-tint: #fedde8;   --tone-pink-ink: #a2063a;
+  --tone-green: #27c494;  --tone-green-tint: #c6f4e6;  --tone-green-ink: #115541;
+  --tone-purple: #b13ae4; --tone-purple-tint: #eac9f8; --tone-purple-ink: #8518b4;
+  --tone-orange: #ff5c24; --tone-orange-tint: #ffd4c6; --tone-orange-ink: #992700;
+  --tone-sand: #baa58c;   --tone-sand-tint: #eee8e2;   --tone-sand-ink: #604e39;
+  --tone-grey: #82807c;   --tone-grey-tint: #e5e5e4;   --tone-grey-ink: #504e4b;
+  /* text on a solid tone fill (bg = the tone's ink step): white on the dark 300 steps [derived] */
+  --on-tone: #ffffff;
+}
+
+.dark {
+  /* Brand Black background, cards as white 7 % on black (≈ #2B2B2A, manual §3.7) */
+  --page: #1c1c1b;
+  --canvas: #222221; /* [derived] */
+  --surface: #2b2b2a;
+  --inset: #252524; /* [derived] */
+  --hover: #333230; /* [derived] */
+  --hover-2: #3b3a38; /* [derived] */
+
+  --ink: #f4f2ef; /* [derived] warm white */
+  --ink-2: #b4b2af; /* grey-300, AAA on black */
+  --ink-3: #82807c; /* grey-500 */
+
+  --line: #363432; /* grey-800 */
+  --line-strong: #504e4b; /* grey-700 */
+  --line-soft: #2f2e2c; /* [derived] */
+  --field: #302f2d; /* [derived] */
+  --shadow-inset-field: inset 0 0 0 1px var(--line-strong), inset 0 1px 2px rgb(0 0 0 / 0.4);
+  --stripe: transparent;
+  --stripe-bg: var(--page);
+
+  --accent: #0e73dc;
+  --accent-ink: #6aa8ee; /* [derived] lighter blue: #0E73DC on black is AA large only */
+  --accent-tint: rgb(14 115 220 / 0.22);
+
+  --green: #27c494; /* green-200 */
+  --green-tint: rgb(39 196 148 / 0.16);
+  --orange: #ff7a4d; /* [derived] lighter orange-200 */
+  --orange-tint: rgb(255 92 36 / 0.16);
+  --red: #f2557f; /* [derived] lighter pink-200 */
+  --red-tint: rgb(231 8 83 / 0.18);
+
+  --tooltip-bg: #121211; /* [derived] */
+  --tooltip-fg: #f4f2ef;
+  --tooltip-muted: #9b9895;
+  --tooltip-border: #363432;
+  /* tones on dark: key colours stay, tints become translucent, text uses lighter steps [derived] */
+  --tone-blue-tint: rgb(14 115 220 / 0.22);   --tone-blue-ink: #8dbcf2;
+  --tone-pink-tint: rgb(231 8 83 / 0.2);      --tone-pink-ink: #f58aad;
+  --tone-green-tint: rgb(39 196 148 / 0.18);  --tone-green-ink: #6fdcbb;
+  --tone-purple-tint: rgb(177 58 228 / 0.22); --tone-purple-ink: #d39af0;
+  --tone-orange-tint: rgb(255 92 36 / 0.18);  --tone-orange-ink: #ff9c78;
+  --tone-sand-tint: rgb(186 165 140 / 0.2);   --tone-sand-ink: #d6c7b5;
+  --tone-grey-tint: rgb(255 255 255 / 0.1);   --tone-grey-ink: #cdcbc9;
+  /* the ink steps are light on dark, so text on a solid tone fill is Brand Black [derived] */
+  --on-tone: #1c1c1b;
+}
+
+@theme inline {
+  --color-tone-blue: var(--tone-blue);
+  --color-tone-blue-tint: var(--tone-blue-tint);
+  --color-tone-blue-ink: var(--tone-blue-ink);
+  --color-tone-pink: var(--tone-pink);
+  --color-tone-pink-tint: var(--tone-pink-tint);
+  --color-tone-pink-ink: var(--tone-pink-ink);
+  --color-tone-green: var(--tone-green);
+  --color-tone-green-tint: var(--tone-green-tint);
+  --color-tone-green-ink: var(--tone-green-ink);
+  --color-tone-purple: var(--tone-purple);
+  --color-tone-purple-tint: var(--tone-purple-tint);
+  --color-tone-purple-ink: var(--tone-purple-ink);
+  --color-tone-orange: var(--tone-orange);
+  --color-tone-orange-tint: var(--tone-orange-tint);
+  --color-tone-orange-ink: var(--tone-orange-ink);
+  --color-tone-sand: var(--tone-sand);
+  --color-tone-sand-tint: var(--tone-sand-tint);
+  --color-tone-sand-ink: var(--tone-sand-ink);
+  --color-tone-grey: var(--tone-grey);
+  --color-tone-grey-tint: var(--tone-grey-tint);
+  --color-tone-grey-ink: var(--tone-grey-ink);
+  --color-on-tone: var(--on-tone);
+  /* PT Serif for page titles (Regular 400, manual §4); Inter stays for everything else. */
+  --font-heading: var(--font-pt-serif), Georgia, "Times New Roman", serif;
+}
