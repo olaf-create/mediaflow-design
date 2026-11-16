@@ -14,5 +14,5 @@ export default defineConfig({
   optimizeDeps: {
     include: ["react", "react-dom", "react-dom/client", "react/jsx-runtime", "lucide-react", "class-variance-authority", "clsx", "tailwind-merge"],
   },
-  test: { include: ["**/*.test.ts"] },
+  test: { include: ["**/*.test.ts", "../src/**/*.test.ts"] },
 });
