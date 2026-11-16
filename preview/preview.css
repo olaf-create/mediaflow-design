@@ -1,0 +1,5 @@
+/* The package's real CSS, exactly as apps import it. */
+@import "../css/index.css";
+/* Tailwind does not see these folders by itself. */
+@source "../src";
+@source "./";
