@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { Blocks, TokenEdit } from "../server/brand-css";
+import { readSheets, tokensFor } from "./inspect";
 import { buildOverrideCss, type Edits } from "./overrides";
 import Showcase from "./Showcase";
 import TokenPanel, { type Row } from "./TokenPanel";
-import { EXTRA_SHADOWS, RADII, groupOf } from "./tokens";
+import { EXTRA_SHADOWS, RADII, TOKEN_GROUPS, groupOf } from "./tokens";
 
 type Mode = "light" | "dark";
 type Model = { brand: Blocks; foundation: Blocks };
@@ -49,6 +50,25 @@ function afterCssUpdate(): Promise<void> {
   });
 }
 
+type Selection = { el: Element; label: string; names: string[] };
+
+function labelFor(el: Element): string {
+  const heading = el.closest("section")?.querySelector("h2")?.textContent?.trim();
+  const tag = el.tagName.toLowerCase();
+  return heading ? `${heading} · ${tag}` : tag;
+}
+
+function Outline({ el, dashed }: { el: Element; dashed?: boolean }) {
+  const r = el.getBoundingClientRect();
+  return (
+    <div
+      aria-hidden
+      className={`pointer-events-none fixed z-50 outline-2 outline-offset-2 outline-accent ${dashed ? "outline-dashed" : "outline-solid"}`}
+      style={{ left: r.left, top: r.top, width: r.width, height: r.height }}
+    />
+  );
+}
+
 export default function App() {
   const [mode, setModeState] = useState<Mode>("light");
   const [model, setModel] = useState<Model | null>(null);
@@ -56,12 +76,86 @@ export default function App() {
   const [edits, setEdits] = useState<Edits>(EMPTY);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ kind: "ok" | "error"; text: string } | null>(null);
+  const [selection, setSelection] = useState<Selection | null>(null);
+  const [hover, setHover] = useState<Element | null>(null);
+  const [, setTick] = useState(0);
+  const mainRef = useRef<HTMLElement>(null);
 
   const names = useMemo(() => {
     if (!model) return [];
     const brandNames = model.brand.root.map((d) => d.name);
     return [...brandNames, ...EXTRA_SHADOWS.filter((n) => !brandNames.includes(n)), ...RADII];
   }, [model]);
+
+  // Panel order, so "first" means the topmost row.
+  const ordered = useMemo(() => {
+    const idx = (n: string) => TOKEN_GROUPS.findIndex((g) => g.label === groupOf(n));
+    return names.map((n, i) => ({ n, i })).sort((a, b) => idx(a.n) - idx(b.n) || a.i - b.i).map((x) => x.n);
+  }, [names]);
+
+  const active = selection !== null || hover !== null;
+  // Re-measure outlines after anything that can move the selected element (mode, edits, selection).
+  useLayoutEffect(() => {
+    if (selection) setTick((t) => t + 1);
+  }, [selection, mode, edits]);
+
+  useEffect(() => {
+    if (!active) return;
+    const redraw = () => setTick((t) => t + 1);
+    const onBlur = () => setHover(null);
+    addEventListener("blur", onBlur);
+    addEventListener("scroll", redraw, true);
+    addEventListener("resize", redraw);
+    return () => {
+      removeEventListener("blur", onBlur);
+      removeEventListener("scroll", redraw, true);
+      removeEventListener("resize", redraw);
+    };
+  }, [active]);
+
+  useEffect(() => {
+    let pointed: Element | null = null;
+    // Elements an Alt-click can pick: inside the showcase, not <main> or the showcase root themselves.
+    const pickable = (t: Element | null) => {
+      const main = mainRef.current;
+      return main && t && main.contains(t) && t !== main && t !== main.firstElementChild ? t : null;
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelection(null);
+      setHover(e.altKey ? pickable(pointed) : null);
+    };
+    const onMove = (e: MouseEvent) => {
+      pointed = e.target instanceof Element ? e.target : null;
+      setHover(e.altKey ? pickable(pointed) : null);
+    };
+    addEventListener("keydown", onKey);
+    addEventListener("keyup", onKey);
+    addEventListener("mousemove", onMove);
+    return () => {
+      removeEventListener("keydown", onKey);
+      removeEventListener("keyup", onKey);
+      removeEventListener("mousemove", onMove);
+    };
+  }, []);
+
+  const block = (e: React.SyntheticEvent & { altKey?: boolean }) => {
+    if (!e.altKey) return;
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const inspect = (e: React.MouseEvent<HTMLElement>) => {
+    if (!e.altKey) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const main = mainRef.current;
+    const target = e.target as Element;
+    if (!main || target === main || target === main.firstElementChild) return setSelection(null);
+    const found = tokensFor(target, readSheets(document), ordered, main);
+    setSelection(found ? { el: found.el, label: labelFor(found.el), names: found.names } : null);
+  };
+
+  const highlight = useMemo(() => (selection ? { label: selection.label, names: selection.names } : null), [selection]);
 
   const load = useCallback(async () => {
     const res = await fetch("/__design/tokens");
@@ -178,11 +272,22 @@ export default function App() {
           onReset={reset}
           onDiscardAll={() => setEdits(EMPTY)}
           onSave={save}
+          highlight={highlight}
+          onClearHighlight={() => setSelection(null)}
         />
       </div>
-      <main className="app-content min-w-0 p-8">
+      <main
+        ref={mainRef}
+        className="app-content min-w-0 p-8"
+        onClickCapture={inspect}
+        onMouseDownCapture={block}
+        onPointerDownCapture={block}
+        onMouseLeave={() => setHover(null)}
+      >
         <Showcase tokens={tiles} />
       </main>
+      {hover && hover.isConnected && <Outline el={hover} dashed />}
+      {selection && selection.el.isConnected && <Outline el={selection.el} />}
     </div>
   );
 }

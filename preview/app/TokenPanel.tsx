@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { RotateCcw } from "lucide-react";
 import { Button, cn, ui } from "../../src";
 import { contrastRatio, composite, formatColor, parseColor, toHex } from "./color";
@@ -23,6 +24,8 @@ type Props = {
   onReset: (name: string) => void;
   onDiscardAll: () => void;
   onSave: () => void;
+  highlight: { label: string; names: string[] } | null;
+  onClearHighlight: () => void;
 };
 
 const fmt = (n: number) => n.toFixed(1).replace(".", ",");
@@ -124,6 +127,15 @@ function Contrast({ rows }: { rows: Row[] }) {
 }
 
 export default function TokenPanel(p: Props) {
+  const scroller = useRef<HTMLDivElement>(null);
+  const marked = new Set(p.highlight?.names);
+  useEffect(() => {
+    const first = p.highlight?.names[0];
+    if (!first) return;
+    const row = Array.from(scroller.current?.querySelectorAll<HTMLElement>("[data-token]") ?? []).find((r) => r.dataset.token === first);
+    const box = scroller.current;
+    if (row && box) box.scrollTo({ top: row.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop - 8, behavior: "smooth" });
+  }, [p.highlight]);
   return (
     <aside className="flex h-screen flex-col border-r border-line bg-surface">
       <div className="flex flex-col gap-3 border-b border-line p-4">
@@ -153,9 +165,21 @@ export default function TokenPanel(p: Props) {
           </div>
         </div>
         {p.message && <div className={p.message.kind === "ok" ? ui.success : ui.error}>{p.message.text}</div>}
+        {p.highlight ? (
+          <div className="flex items-center justify-between gap-2 text-[12.5px] text-ink-2">
+            <span className="min-w-0 truncate">
+              {p.highlight.names.length} {p.highlight.names.length === 1 ? "Wert" : "Werte"} für {p.highlight.label}
+            </span>
+            <Button size="sm" variant="quiet" onClick={p.onClearHighlight}>
+              Aufheben
+            </Button>
+          </div>
+        ) : (
+          <p className="text-[11.5px] text-ink-3">⌥-Klick auf ein Element rechts zeigt seine Werte.</p>
+        )}
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4">
+      <div ref={scroller} className="flex-1 overflow-y-auto p-4">
         {TOKEN_GROUPS.map((g) => {
           const rows = p.rows.filter((r) => groupOf(r.name) === g.label);
           if (rows.length === 0) return null;
@@ -164,7 +188,11 @@ export default function TokenPanel(p: Props) {
               <h3 className={cn(ui.fieldLabel, "mb-2")}>{g.label}</h3>
               <div className="flex flex-col gap-3">
                 {rows.map((r) => (
-                  <div key={r.name} className="flex flex-col gap-1.5">
+                  <div
+                    key={r.name}
+                    data-token={r.name}
+                    className={cn("flex flex-col gap-1.5", marked.has(r.name) && "-mx-2 rounded-control bg-hover-2 px-2 py-1.5 ring-1 ring-accent")}
+                  >
                     <div className="flex items-center gap-1.5">
                       {r.changed && <span title="Geändert" className="size-1.5 shrink-0 rounded-full bg-accent" />}
                       <span className="font-mono text-[12px] text-ink">{r.name}</span>
