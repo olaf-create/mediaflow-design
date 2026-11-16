@@ -118,6 +118,7 @@ Danach:
 Welche Tools das Design nutzen, steht in `README.md` unter „Used by“. Aktuell:
 
 - Competitive Intelligence
+- Marketing Management
 
 ---
 

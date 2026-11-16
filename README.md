@@ -120,3 +120,4 @@ change to vendored files in `css/beautifui/README.md`.
 ## Used by
 
 - mediaflow-competitive-intelligence (since v1.0.0)
+- Marketing Management (since v1.0.0)
