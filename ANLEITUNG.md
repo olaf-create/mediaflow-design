@@ -68,7 +68,9 @@ Claude passt die Dateien an, prüft sie technisch und trägt die Änderung ins �
 **Selbst ausprobieren: die Vorschau.** Farben, Schatten und Rundungen kannst du auch selbst
 verändern. Sag Claude im Design-Projekt: „Starte die Design-Vorschau.“ Im Browser öffnet sich eine
 Seite mit allen Elementen. Links stellst du Werte ein (für Hell und Dunkel getrennt), rechts siehst
-du sofort die Wirkung. Eine Kontrastliste warnt, wenn Text schlecht lesbar wird. Mit **Speichern**
+du sofort die Wirkung. Eine Kontrastliste warnt, wenn Text schlecht lesbar wird. Willst du wissen, welche
+Werte ein Element prägt, halte die **⌥-Taste** (Alt) gedrückt und klick rechts darauf: Links werden
+genau seine Werte markiert, und die Liste springt zum ersten. **Esc** hebt die Markierung auf. Mit **Speichern**
 landen die Werte in der Design-Datei; danach geht es mit Schritt 5 weiter.
 
 ### Schritt 4 – Vorher anschauen
