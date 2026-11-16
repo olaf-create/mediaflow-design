@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+Vorschau mit Live-Bearbeitung (`npm run preview`): alle Elemente auf einer Seite, Werte je Modus
+einstellen, Kontrastliste, „Speichern“ schreibt nach `css/brand.css`. Nur im Repo, nicht im Paket.
+
 ## 1.0.0 — 14.11.2026
 
 Extracted from mediaflow-competitive-intelligence (main @ 5bbbf17), no visual changes:

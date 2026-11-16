@@ -34,7 +34,7 @@ interne Next.js-Apps, aufgebaut auf Beautiful UI (MIT). Wird per Git-Tag aus Git
 
 ## Änderung und Release
 
-1. Ändern, `npm run typecheck` grün.
+1. Ändern (von Hand oder über `npm run preview`), `npm run typecheck` und `npm test` grün.
 2. Eintrag in `CHANGELOG.md` (Datum TT.MM.JJJJ), `version` in `package.json` erhöhen:
    - geänderte Werte → **Patch**
    - neue Tokens, Klassen, Komponenten → **Minor**
@@ -55,7 +55,10 @@ Zum Ausprobieren vor einem Release das Paket lokal in eine App verlinken
 ## Befehle
 
 - `npm install` – Dev-Abhängigkeiten
-- `npm run typecheck` – TypeScript prüfen (einziger Check, es gibt keine Tests)
+- `npm run typecheck` – TypeScript prüfen (Paket und Vorschau)
+- `npm test` – Unit-Tests der Vorschau (vor allem das Zurückschreiben in `brand.css`)
+- `npm run preview` – lokale Vorschau aller Elemente mit Live-Bearbeitung der Werte und „Speichern“
+  nach `css/brand.css` (nur Entwicklung, nicht im Paket)
 
 ## Aufbau
 
@@ -74,4 +77,7 @@ src/
   logo.ts            Mediaflow-Wortmarke als SVG-Pfade
   theme.ts           THEME_SCRIPT, FONT_VARIABLES
   utils.ts           cn()
+preview/             lokale Vorschau (Vite), nicht im Paket
+  server/            brand.css lesen/zurückschreiben (+ Tests), Vite-Plugin für Laden/Speichern
+  app/               Seite: Werte-Panel, alle Elemente, Kontrast
 ```

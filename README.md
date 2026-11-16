@@ -28,6 +28,23 @@ Values marked `[derived]` in `brand.css` are not in the manual.
 
 App-specific mappings (which navigation group gets which tone, area icons) stay in the app.
 
+## Preview
+
+A local page that shows every element of this package and lets you edit the token values live:
+
+```bash
+npm install
+npm run preview
+```
+
+- Left: all values from `css/brand.css` plus the Beautiful UI shadows and radii, edited per mode
+  (Hell / Dunkel) with colour pickers, sliders or text fields. Changes show immediately; a contrast
+  list flags text/surface pairs below WCAG AA.
+- **Speichern** writes only the changed values into `css/brand.css` (comments stay; changed values
+  get a `[derived]` mark with the old value). An edit only affects the mode it was made in.
+- Then release as described below. `preview/` is not part of the published package.
+- `npm test` runs the unit tests for the preview (mainly the `brand.css` rewriter).
+
 ## Use in an app
 
 The repository is public so Vercel can install it without a token.

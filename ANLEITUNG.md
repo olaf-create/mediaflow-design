@@ -65,6 +65,12 @@ Einfach in normaler Sprache, zum Beispiel:
 
 Claude passt die Dateien an, prüft sie technisch und trägt die Änderung ins Änderungsprotokoll ein.
 
+**Selbst ausprobieren: die Vorschau.** Farben, Schatten und Rundungen kannst du auch selbst
+verändern. Sag Claude im Design-Projekt: „Starte die Design-Vorschau.“ Im Browser öffnet sich eine
+Seite mit allen Elementen. Links stellst du Werte ein (für Hell und Dunkel getrennt), rechts siehst
+du sofort die Wirkung. Eine Kontrastliste warnt, wenn Text schlecht lesbar wird. Mit **Speichern**
+landen die Werte in der Design-Datei; danach geht es mit Schritt 5 weiter.
+
 ### Schritt 4 – Vorher anschauen
 
 Bitte Claude, dir die Änderung **in einem Tool zu zeigen, bevor sie freigegeben wird**:
