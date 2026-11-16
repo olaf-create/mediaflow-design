@@ -2,11 +2,11 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import { designPlugin } from "./server/plugin";
+import { designPlugin } from "./server/plugin.ts";
 
 // Local design preview (not shipped: package.json "files" lists css, src, CHANGELOG.md only).
 export default defineConfig({
-  root: __dirname,
+  root: import.meta.dirname,
   plugins: [react(), tailwindcss(), designPlugin()],
   server: { fs: { allow: [".."] } },
   // Pre-bundle everything up front: a late re-optimisation would load a second copy of React.

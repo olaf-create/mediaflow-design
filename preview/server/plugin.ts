@@ -2,7 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import type { IncomingMessage } from "node:http";
 import type { Plugin } from "vite";
-import { applyEdits, parseBlocks, validateEdit, type TokenEdit } from "./brand-css";
+import { applyEdits, parseBlocks, validateEdit, type TokenEdit } from "./brand-css.ts";
 
 type Result = { status: number; json: unknown };
 
@@ -61,7 +61,7 @@ function readBody(req: IncomingMessage): Promise<unknown> {
 
 /** Dev-server only: GET /__design/tokens, POST /__design/save. */
 export function designPlugin(opts: { repoRoot?: string } = {}): Plugin {
-  const repoRoot = opts.repoRoot ?? resolve(__dirname, "../..");
+  const repoRoot = opts.repoRoot ?? resolve(import.meta.dirname, "../..");
   return {
     name: "mediaflow-design-preview",
     apply: "serve",
