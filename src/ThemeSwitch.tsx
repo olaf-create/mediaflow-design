@@ -22,16 +22,35 @@ function getStorage(): Storage | null {
   }
 }
 
+// Set when storage refused the last choice: the switch then shows it, and it is re-applied after an
+// OS colour-scheme change (THEME_SCRIPT would fall back to the OS). Lasts until the next page load.
+let unsaved: ThemeMode | null = null;
+const listeners = new Set<() => void>();
+
 function read(): ThemeMode {
-  return readThemeMode(getStorage());
+  return unsaved ?? readThemeMode(getStorage());
+}
+
+function osDark() {
+  return matchMedia("(prefers-color-scheme: dark)");
+}
+
+function applyUnsaved() {
+  if (!unsaved) return;
+  document.documentElement.classList.toggle("dark", unsaved === "dark" || (unsaved === "system" && osDark().matches));
 }
 
 function subscribe(onChange: () => void) {
+  const media = osDark();
+  listeners.add(onChange);
   window.addEventListener("theme-change", onChange);
   window.addEventListener("storage", onChange);
+  media.addEventListener("change", applyUnsaved);
   return () => {
+    listeners.delete(onChange);
     window.removeEventListener("theme-change", onChange);
     window.removeEventListener("storage", onChange);
+    media.removeEventListener("change", applyUnsaved);
   };
 }
 
@@ -42,13 +61,13 @@ export function ThemeSwitch({ labels, className }: { labels: ThemeSwitchLabels; 
 
   function choose(next: ThemeMode) {
     if (!writeThemeMode(next, getStorage())) {
-      // Storage blocked: apply directly; the choice lasts until the next page load.
-      document.documentElement.classList.toggle(
-        "dark",
-        next === "dark" || (next === "system" && matchMedia("(prefers-color-scheme: dark)").matches),
-      );
+      // Storage blocked: apply directly (a "theme-change" event would re-read the empty storage).
+      unsaved = next;
+      applyUnsaved();
+      listeners.forEach((l) => l());
       return;
     }
+    unsaved = null;
     window.dispatchEvent(new Event("theme-change"));
   }
 

@@ -107,6 +107,16 @@
   --on-tone: #1c1c1b;
 }
 
+/* Native controls (checkboxes, selects, scrollbars) follow the mode. Separate blocks: the preview
+   editor reads only custom properties from the first :root and .dark blocks. */
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
 @theme inline {
   --color-tone-blue: var(--tone-blue);
   --color-tone-blue-tint: var(--tone-blue-tint);
