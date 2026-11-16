@@ -7,6 +7,7 @@ import {
   TONE_ICON,
   TONE_OUTLINE,
   TONE_SOLID,
+  ThemeSwitch,
   TitleMark,
   cn,
   ui,
@@ -63,6 +64,10 @@ export default function Showcase({ tokens }: { tokens: { name: string; value: st
           <span className={ui.fieldLabel}>Feldbezeichnung</span>
           <a href="#" className={ui.link}>Ein Link</a>
         </div>
+      </Section>
+
+      <Section title="Hell/Dunkel-Schalter">
+        <ThemeSwitch labels={{ group: "Farbmodus", light: "Hell", dark: "Dunkel", system: "System" }} />
       </Section>
 
       <Section title="Buttons">

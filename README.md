@@ -23,6 +23,7 @@ Values marked `[derived]` in `brand.css` are not in the manual.
 | `src/tones.tsx` | `Tone`, `TONE_ICON/CHIP/SOLID/OUTLINE/HOVER`, `TitleMark` |
 | `src/Button.tsx` | Pill button (cva): primary, secondary, ghost, accent, success, quiet · xs, sm, md |
 | `src/primitives/*` | Beautiful UI components (GlideMenu, SidebarNav, RecordsTable, FilterTable, SearchList) |
+| `src/ThemeSwitch.tsx`, `src/theme-mode.ts` | `ThemeSwitch` light/dark/system radio switch (`labels` prop), `readThemeMode`/`writeThemeMode` helpers |
 | `src/logo.ts` | Mediaflow wordmark as SVG paths (viewBox `0 0 360.03 71.53`) |
 | `src/theme.ts` | `THEME_SCRIPT` (dark mode + text size before paint), `FONT_VARIABLES` |
 

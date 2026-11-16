@@ -5,6 +5,11 @@
 Vorschau mit Live-Bearbeitung (`npm run preview`): alle Elemente auf einer Seite, Werte je Modus
 einstellen, Kontrastliste, „Speichern“ schreibt nach `css/brand.css`. Nur im Repo, nicht im Paket.
 
+## 1.1.0 — 16.11.2026
+
+New `ThemeSwitch` component: light/dark/system switch (sun, moon, monitor) that stores the choice in
+localStorage "theme" and notifies `THEME_SCRIPT` via the `theme-change` event. Labels via `labels` prop.
+
 ## 1.0.0 — 14.11.2026
 
 Extracted from mediaflow-competitive-intelligence (main @ 5bbbf17), no visual changes:
