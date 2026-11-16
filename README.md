@@ -41,6 +41,10 @@ npm run preview
 - Left: all values from `css/brand.css` plus the Beautiful UI shadows and radii, edited per mode
   (Hell / Dunkel) with colour pickers, sliders or text fields. Changes show immediately; a contrast
   list flags text/surface pairs below WCAG AA.
+- **⌥/Alt-click** an element on the right (button, chip, field, message, card, table …) to highlight
+  the tokens it uses in the panel and scroll to the first one. A plain click still operates the
+  element; holding ⌥ outlines what a click would pick. Escape or **Aufheben** clears it. The tokens
+  are read from the loaded CSS rules (`preview/app/inspect.ts`), including hover, focus and error states.
 - **Speichern** writes only the changed values into `css/brand.css` (comments stay; changed values
   get a `[derived]` mark with the old value). An edit only affects the mode it was made in.
 - Then release as described below. `preview/` is not part of the published package.
