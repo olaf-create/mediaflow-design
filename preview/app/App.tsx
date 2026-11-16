@@ -1,9 +1,9 @@
-import { ui } from "../../src";
+import Showcase from "./Showcase";
 
 export default function App() {
   return (
     <main className="app-content p-8">
-      <h1 className={ui.h1}>Mediaflow Design – Vorschau</h1>
+      <Showcase tokens={[{ name: "--accent", value: "#0e73dc" }]} />
     </main>
   );
 }
