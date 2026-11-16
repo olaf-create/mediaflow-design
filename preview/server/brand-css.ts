@@ -138,8 +138,26 @@ export function validateEdit(e: TokenEdit): string | null {
   if (!["root", "dark", "theme"].includes(e.block)) return `Unbekannter Bereich „${e.block}“.`;
   if (typeof e.name !== "string" || !NAME.test(e.name)) return `Ungültiger Name „${e.name}“.`;
   if (typeof e.value !== "string" || e.value.trim() === "") return `${e.name}: Wert darf nicht leer sein.`;
-  if (/[;{}]|\/\*/.test(e.value)) return `${e.name}: Wert darf keine der Zeichen ; { } oder /* enthalten.`;
+  if (/[;{}\\]|\/\*/.test(e.value)) return `${e.name}: Wert darf keine der Zeichen ; { } \\ oder /* enthalten.`;
+  if (!balanced(e.value)) return `${e.name}: Klammern oder Anführungszeichen sind nicht ausgeglichen.`;
+  if (/^--radius-/.test(e.name) && !/^\d+(\.\d+)?px$/.test(e.value.trim())) return `${e.name}: Radius bitte als Zahl in px angeben, z. B. 10px.`;
   return null;
+}
+
+/** Brackets close in order and quotes are paired — otherwise the browser swallows the rest of the block. */
+function balanced(v: string): boolean {
+  const stack: string[] = [];
+  let quote: string | null = null;
+  for (const c of v) {
+    if (quote) {
+      if (c === quote) quote = null;
+    } else if (c === '"' || c === "'") quote = c;
+    else if (c === "(" || c === "[") stack.push(c === "(" ? ")" : "]");
+    else if (c === ")" || c === "]") {
+      if (stack.pop() !== c) return false;
+    }
+  }
+  return quote === null && stack.length === 0;
 }
 
 function splice(css: string, start: number, end: number, text: string): string {

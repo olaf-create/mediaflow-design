@@ -18,3 +18,9 @@ test("radius edits set the variable and the baked utility class", () => {
 test("no edits, no css", () => {
   expect(buildOverrideCss({ root: {}, dark: {}, theme: {} })).toBe("");
 });
+
+test("invalid values are left out of the live css", () => {
+  expect(buildOverrideCss({ root: { "--ink": "rgb(1 2", "--page": "#fff" }, dark: { "--x": "red;}" }, theme: { "--radius-card": "px" } })).toBe(
+    ":root:not(.dark){--page:#fff;}",
+  );
+});

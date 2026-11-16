@@ -162,3 +162,20 @@ test("accepts odd but harmless value", () => {
 test("applyEdits throws on an invalid edit", () => {
   expect(() => applyEdits(brand, foundation, edit("root", "--ink", "red;}"))).toThrow();
 });
+
+test.each([["rgb(1 2 3"], ["a)"], [")("], ['"x'], ["'x"], ["red\\"], ["[a"]])("rejects unbalanced value %j", (v) => {
+  expect(validateEdit({ block: "root", name: "--page", value: v })).not.toBeNull();
+});
+
+test("accepts balanced functions and quotes", () => {
+  expect(validateEdit({ block: "root", name: "--x", value: 'rgb(1 2 3 / 0.5), "Inter", var(--a)' })).toBeNull();
+});
+
+test.each([["px"], ["abc"], ["-2px"], ["12"]])("rejects bad radius %j", (v) => {
+  expect(validateEdit({ block: "theme", name: "--radius-card", value: v })).not.toBeNull();
+});
+
+test("accepts radius in px", () => {
+  expect(validateEdit({ block: "theme", name: "--radius-card", value: "12px" })).toBeNull();
+  expect(validateEdit({ block: "theme", name: "--radius-card", value: "0px" })).toBeNull();
+});

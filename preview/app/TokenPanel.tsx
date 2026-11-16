@@ -39,8 +39,8 @@ function Editor({ row, onChange }: { row: Row; onChange: (v: string) => void }) 
     const px = parseFloat(row.value) || 0;
     return (
       <div className="flex items-center gap-2">
-        <input type="range" min={0} max={24} step={1} value={px} onChange={(e) => onChange(`${e.target.value}px`)} className="flex-1 accent-[var(--accent)]" />
-        <input type="number" min={0} max={24} value={px} onChange={(e) => onChange(`${e.target.value}px`)} className={cn(ui.field, "h-7 w-16 px-2 text-[12.5px]")} />
+        <input type="range" min={0} max={24} step={1} value={px} onChange={(e) => e.target.value !== "" && !Number.isNaN(Number(e.target.value)) && onChange(`${Number(e.target.value)}px`)} className="flex-1 accent-[var(--accent)]" />
+        <input type="number" min={0} max={24} value={px} onChange={(e) => e.target.value !== "" && !Number.isNaN(Number(e.target.value)) && onChange(`${Number(e.target.value)}px`)} className={cn(ui.field, "h-7 w-16 px-2 text-[12.5px]")} />
       </div>
     );
   }

@@ -32,6 +32,18 @@ export async function handleSave(repoRoot: string, body: unknown): Promise<Resul
   return { status: 200, json: { changed } };
 }
 
+/**
+ * Saving changes a file on disk, so only the preview page itself may call it: JSON content type
+ * (forces a CORS preflight for other sites) and, if the browser sends one, our own origin.
+ */
+export function checkSaveRequest(headers: Record<string, string | string[] | undefined>, host: string): string | null {
+  const type = String(headers["content-type"] ?? "");
+  if (!type.startsWith("application/json")) return "Nur JSON-Anfragen erlaubt.";
+  const origin = headers.origin;
+  if (origin && origin !== `http://${host}` && origin !== `https://${host}`) return "Anfrage von fremder Seite abgelehnt.";
+  return null;
+}
+
 function readBody(req: IncomingMessage): Promise<unknown> {
   return new Promise((ok, fail) => {
     let s = "";
@@ -60,7 +72,10 @@ export function designPlugin(opts: { repoRoot?: string } = {}): Plugin {
         let result: Result;
         try {
           if (url === "/__design/tokens" && req.method === "GET") result = await handleTokens(repoRoot);
-          else if (url === "/__design/save" && req.method === "POST") result = await handleSave(repoRoot, await readBody(req));
+          else if (url === "/__design/save" && req.method === "POST") {
+            const denied = checkSaveRequest(req.headers, req.headers.host ?? "");
+            result = denied ? { status: 403, json: { error: denied } } : await handleSave(repoRoot, await readBody(req));
+          }
           else result = { status: 405, json: { error: "Methode nicht erlaubt." } };
         } catch (e) {
           result = { status: 500, json: { error: e instanceof Error ? e.message : String(e) } };

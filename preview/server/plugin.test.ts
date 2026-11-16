@@ -2,7 +2,7 @@ import { appendFileSync, cpSync, mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { beforeEach, expect, test } from "vitest";
-import { handleSave, handleTokens } from "./plugin";
+import { checkSaveRequest, handleSave, handleTokens } from "./plugin";
 
 let root: string;
 const brandPath = () => join(root, "css/brand.css");
@@ -43,4 +43,12 @@ test("invalid value is rejected and nothing is written", async () => {
 test("malformed body is rejected", async () => {
   expect((await handleSave(root, {})).status).toBe(400);
   expect((await handleSave(root, null)).status).toBe(400);
+});
+
+test("only same-origin JSON requests may save", () => {
+  expect(checkSaveRequest({ "content-type": "application/json" }, "localhost:5199")).toBeNull();
+  expect(checkSaveRequest({ "content-type": "application/json", origin: "http://localhost:5199" }, "localhost:5199")).toBeNull();
+  expect(checkSaveRequest({ "content-type": "text/plain" }, "localhost:5199")).not.toBeNull();
+  expect(checkSaveRequest({}, "localhost:5199")).not.toBeNull();
+  expect(checkSaveRequest({ "content-type": "application/json", origin: "https://evil.example" }, "localhost:5199")).not.toBeNull();
 });
