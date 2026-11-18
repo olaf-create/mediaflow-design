@@ -127,11 +127,11 @@ function RailButton({
       <span className={`flex size-5 shrink-0 items-center justify-center ${active ? "text-ink" : "text-ink-2"}`}>
         {icon}
       </span>
-      <span className={`sidebar-copy ml-1.5 min-w-0 flex-1 truncate text-[14px] font-medium ${active ? "text-ink" : "text-ink-2"}`}>
+      <span className={`sidebar-copy ml-1.5 min-w-0 flex-1 truncate text-[0.875rem] font-medium ${active ? "text-ink" : "text-ink-2"}`}>
         {label}
       </span>
       {count && (
-        <span className="sidebar-copy mr-2 shrink-0 text-[12px] font-medium tabular-nums text-ink-3">
+        <span className="sidebar-copy mr-2 shrink-0 text-[0.75rem] font-medium tabular-nums text-ink-3">
           {count}
         </span>
       )}
@@ -164,10 +164,10 @@ function WorkspaceMenu({
           onClick={onClose}
           className="relative z-10 flex h-10 w-full items-center gap-1.5 rounded-[8px] px-2 text-left"
         >
-          <span className="flex size-6 shrink-0 items-center justify-center rounded-[7px] bg-ink text-[11px] font-semibold text-surface">
+          <span className="flex size-6 shrink-0 items-center justify-center rounded-[7px] bg-ink text-[0.6875rem] font-semibold text-surface">
             {WORKSPACE.monogram}
           </span>
-          <span className="min-w-0 flex-1 truncate text-[13.5px] font-medium text-ink">{WORKSPACE.name}</span>
+          <span className="min-w-0 flex-1 truncate text-[0.84375rem] font-medium text-ink">{WORKSPACE.name}</span>
           <span className="shrink-0 text-ink"><IconCheckmark1Small size={18} /></span>
         </button>
         <div className="my-1 h-px bg-line" />
@@ -184,7 +184,7 @@ function WorkspaceMenu({
             className="relative z-10 flex h-9 w-full items-center gap-1.5 rounded-[8px] px-2 text-left"
           >
             <span className="flex size-5 shrink-0 items-center justify-center text-ink-2">{item.icon}</span>
-            <span className="min-w-0 flex-1 truncate text-[13.5px] text-ink">{item.label}</span>
+            <span className="min-w-0 flex-1 truncate text-[0.84375rem] text-ink">{item.label}</span>
           </button>
         ))}
         <div className="my-1 h-px bg-line" />
@@ -195,7 +195,7 @@ function WorkspaceMenu({
           className="relative z-10 flex h-9 w-full items-center gap-1.5 rounded-[8px] px-2 text-left"
         >
           <span className="flex size-5 shrink-0 items-center justify-center text-ink-2"><IconArrowBoxLeft size={16} /></span>
-          <span className="min-w-0 flex-1 truncate text-[13.5px] text-ink">Sign out</span>
+          <span className="min-w-0 flex-1 truncate text-[0.84375rem] text-ink">Sign out</span>
         </button>
       </GlideMenu>
     </div>,
@@ -292,7 +292,7 @@ export default function SidebarNav({
             <span className="sidebar-logo flex size-5 shrink-0 items-center justify-center text-ink">
               <IconPopsicle2 size={18} />
             </span>
-            <span className="sidebar-copy ml-1.5 min-w-0 flex-1 truncate text-[14px] font-medium text-ink-2">
+            <span className="sidebar-copy ml-1.5 min-w-0 flex-1 truncate text-[0.875rem] font-medium text-ink-2">
               {WORKSPACE.name}
             </span>
             <span className="sidebar-copy ml-1 flex shrink-0 text-ink-3">
@@ -350,7 +350,7 @@ export default function SidebarNav({
           <div className="sidebar-copy relative mx-2 mb-1 h-8">
             <div
               aria-hidden={searchOpen}
-              className={`absolute inset-0 flex items-center gap-1.5 px-2 text-[12.5px] font-medium text-ink-3 transition-[opacity,transform] ${searchOpen ? "pointer-events-none -translate-x-1 opacity-0" : "translate-x-0 opacity-100"}`}
+              className={`absolute inset-0 flex items-center gap-1.5 px-2 text-[0.78125rem] font-medium text-ink-3 transition-[opacity,transform] ${searchOpen ? "pointer-events-none -translate-x-1 opacity-0" : "translate-x-0 opacity-100"}`}
               style={{ transitionDuration: `${CHAT_SEARCH_MOTION.duration}ms`, transitionTimingFunction: CHAT_SEARCH_MOTION.easing }}
             >
               <IconChevronDownSmall size={16} />
@@ -391,7 +391,7 @@ export default function SidebarNav({
                 }}
                 placeholder="Search chats"
                 aria-label="Search chat history"
-                className="ml-1.5 min-w-0 flex-1 bg-transparent text-[13px] font-medium text-ink outline-none placeholder:text-ink-3"
+                className="ml-1.5 min-w-0 flex-1 bg-transparent text-[0.8125rem] font-medium text-ink outline-none placeholder:text-ink-3"
               />
               <button
                 type="button"
@@ -425,14 +425,14 @@ export default function SidebarNav({
                     active ? "bg-hover-2 group-hover/glide:bg-transparent" : ""
                   }`}
                 >
-                  <span className={`sidebar-copy min-w-0 flex-1 truncate text-[14px] font-medium ${active ? "text-ink" : "text-ink-2"}`}>
+                  <span className={`sidebar-copy min-w-0 flex-1 truncate text-[0.875rem] font-medium ${active ? "text-ink" : "text-ink-2"}`}>
                     {item.label}
                   </span>
                 </button>
               );
             })}
             {query && visibleRecents.length === 0 && (
-              <div className="sidebar-copy mx-2 px-2 py-2 text-[12.5px] text-ink-3">No chats found</div>
+              <div className="sidebar-copy mx-2 px-2 py-2 text-[0.78125rem] text-ink-3">No chats found</div>
             )}
           </GlideGroup>
         </div>
@@ -441,7 +441,7 @@ export default function SidebarNav({
           <button
             type="button"
             onClick={onFooterClick ?? onNewChat}
-            className="flex h-8 w-full items-center justify-center gap-1.5 rounded-control bg-hover-2 text-[12.5px] font-medium text-ink transition-[background-color,transform] duration-150 hover:bg-line-strong active:scale-[0.98]"
+            className="flex h-8 w-full items-center justify-center gap-1.5 rounded-control bg-hover-2 text-[0.78125rem] font-medium text-ink transition-[background-color,transform] duration-150 hover:bg-line-strong active:scale-[0.98]"
           >
             {footerIcon}
             {footerLabel}

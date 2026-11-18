@@ -190,7 +190,7 @@ body {
   background-attachment: fixed;
   color: var(--ink);
   font-feature-settings: "cv11", "ss01";
-  font-size: 14px;
+  font-size: 0.875rem;
   letter-spacing: -0.01em;
   line-height: 1.5;
 }
@@ -472,7 +472,7 @@ a:focus-visible .animated-underline::after {
   color: var(--tooltip-fg);
   background: var(--tooltip-bg);
   box-shadow: var(--shadow-overlay);
-  font-size: 11.5px;
+  font-size: 0.71875rem;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }

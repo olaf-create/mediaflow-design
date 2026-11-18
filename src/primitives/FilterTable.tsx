@@ -65,14 +65,14 @@ export default function FilterTable({
               type="button"
               aria-pressed={active}
               onClick={() => setFilter(f.key)}
-              className={`flex h-6.5 shrink-0 items-center gap-1.5 rounded-full px-2.5 text-[12px]
+              className={`flex h-6.5 shrink-0 items-center gap-1.5 rounded-full px-2.5 text-[0.75rem]
                 font-medium transition-[background-color,box-shadow,color] duration-200
                 ${active ? "bg-surface text-ink shadow-btn" : "text-ink-2 hover:bg-hover"}`}
             >
               {f.dot && <span className="size-1.5 rounded-full" style={{ background: f.dot }} />}
               {f.label}
               <span
-                className={`rounded-[4px] px-1 text-[10.5px] tabular-nums
+                className={`rounded-[4px] px-1 text-[0.65625rem] tabular-nums
                   ${active ? "bg-field text-ink-2" : "text-ink-3"}`}
               >
                 {f.count}
@@ -91,7 +91,7 @@ export default function FilterTable({
         style={{ scrollbarWidth: "none" }}
       >
         <div className="min-w-[420px]">
-          <div className="grid grid-cols-[minmax(0,1.3fr)_minmax(0,0.6fr)_minmax(0,0.95fr)_minmax(0,0.9fr)] border-b border-[var(--grid-line)] text-[12.5px] font-medium text-ink-2">
+          <div className="grid grid-cols-[minmax(0,1.3fr)_minmax(0,0.6fr)_minmax(0,0.95fr)_minmax(0,0.9fr)] border-b border-[var(--grid-line)] text-[0.78125rem] font-medium text-ink-2">
             <span className="border-r border-[var(--grid-line)] px-3 py-2">{labels.columns.task}</span>
             <span className="border-r border-[var(--grid-line)] px-3 py-2">{labels.columns.date}</span>
             <span className="border-r border-[var(--grid-line)] px-3 py-2">{labels.columns.status}</span>
@@ -113,7 +113,7 @@ export default function FilterTable({
                 <div className="overflow-hidden">
                   <div
                     className="grid grid-cols-[minmax(0,1.3fr)_minmax(0,0.6fr)_minmax(0,0.95fr)_minmax(0,0.9fr)] border-b
-                      border-[var(--grid-line)] text-[13px] transition-colors duration-100 hover:bg-hover"
+                      border-[var(--grid-line)] text-[0.8125rem] transition-colors duration-100 hover:bg-hover"
                   >
                     <span className="flex min-w-0 items-center border-r border-[var(--grid-line)] px-3 py-2">
                       <span className="truncate font-medium text-ink">{row.task}</span>
@@ -124,7 +124,7 @@ export default function FilterTable({
                     <span className="flex items-center border-r border-[var(--grid-line)] px-3 py-2">
                       <span
                         className={`inline-flex h-[23px] shrink-0 items-center whitespace-nowrap rounded-[8px] border px-[7px]
-                          text-[13px] font-medium ${pill.cls}`}
+                          text-[0.8125rem] font-medium ${pill.cls}`}
                       >
                         {pill.label}
                       </span>

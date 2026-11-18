@@ -62,7 +62,7 @@ export default function SearchList({
             onChange={(event) => setQuery(event.target.value)}
             placeholder={labels.placeholder}
             aria-label={labels.ariaLabel}
-            className="min-w-0 flex-1 bg-transparent text-[13px] text-ink outline-none placeholder:text-ink-3"
+            className="min-w-0 flex-1 bg-transparent text-[0.8125rem] text-ink outline-none placeholder:text-ink-3"
           />
           {query && (
             <button
@@ -89,8 +89,8 @@ export default function SearchList({
                 <path d="M21 21l-4.3-4.3" />
               </svg>
             </span>
-            <span className="text-[13px] font-medium text-ink">{labels.emptyTitle}</span>
-            <span className="text-[12px] text-ink-3">{labels.emptyHint}</span>
+            <span className="text-[0.8125rem] font-medium text-ink">{labels.emptyTitle}</span>
+            <span className="text-[0.75rem] text-ink-3">{labels.emptyHint}</span>
           </div>
         ) : (
           <div className="p-1">
@@ -101,7 +101,7 @@ export default function SearchList({
                   data-menu-row
                   type="button"
                   onClick={() => setQuery(item)}
-                  className="relative z-10 flex h-8 w-full items-center rounded-[6px] px-2 text-left text-[13px] text-ink"
+                  className="relative z-10 flex h-8 w-full items-center rounded-[6px] px-2 text-left text-[0.8125rem] text-ink"
                   style={{ animation: "fade-in 200ms ease-out both" }}
                 >
                   {item}
