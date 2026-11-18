@@ -1,7 +1,10 @@
-/* Text size (header slider, 5 levels, 2 = normal): zooms the main content area only, so the
-   sidebar and header keep their layout. data-text-size is set on <html> by THEME_SCRIPT;
-   the app marks its main content area with the class .app-content. */
-[data-text-size="1"] .app-content { zoom: 0.9; }
-[data-text-size="3"] .app-content { zoom: 1.1; }
-[data-text-size="4"] .app-content { zoom: 1.2; }
-[data-text-size="5"] .app-content { zoom: 1.35; }
+/* Text size (header slider, 5 levels, 2 = normal): scales the root font size, so everything set in
+   rem grows with it (all package font sizes are rem). No `zoom`: zoom breaks pointer maths in drag
+   libraries (Gantt, calendar, boards). data-text-size is set on <html> by THEME_SCRIPT. Print stays
+   at the normal size. */
+@media screen {
+  html[data-text-size="1"] { font-size: 90%; }
+  html[data-text-size="3"] { font-size: 110%; }
+  html[data-text-size="4"] { font-size: 120%; }
+  html[data-text-size="5"] { font-size: 135%; }
+}

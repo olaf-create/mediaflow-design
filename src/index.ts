@@ -7,3 +7,13 @@ export { MEDIAFLOW_LOGO_PATHS } from "./logo";
 export { THEME_SCRIPT, FONT_VARIABLES } from "./theme";
 export { ThemeSwitch, type ThemeSwitchLabels } from "./ThemeSwitch";
 export { readThemeMode, writeThemeMode, type ThemeMode } from "./theme-mode";
+export { TextSizeSlider, type TextSizeSliderLabels } from "./TextSizeSlider";
+export {
+  readTextSize,
+  writeTextSize,
+  TEXT_SIZE_KEY,
+  TEXT_SIZE_EVENT,
+  TEXT_SIZE_MIN,
+  TEXT_SIZE_MAX,
+  TEXT_SIZE_DEFAULT,
+} from "./text-size";

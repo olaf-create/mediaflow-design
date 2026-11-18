@@ -18,7 +18,7 @@ Values marked `[derived]` in `brand.css` are not in the manual.
 | `css/index.css` | Entry point: Beautiful UI → brand tokens → app shell (order matters) |
 | `css/beautifui/` | Beautiful UI, vendored and cut at the section banners (see its README) |
 | `css/brand.css` | Mediaflow tokens, light (`:root`) and dark (`.dark`), tones, `--font-heading` |
-| `css/app-shell.css` | Text-size zoom levels for `.app-content` |
+| `css/app-shell.css` | Text-size levels (root font size per `data-text-size`) |
 | `src/styles.ts` | `ui.*` shared class names (card, field, table, chip, link …) |
 | `src/tones.tsx` | `Tone`, `TONE_ICON/CHIP/SOLID/OUTLINE/HOVER`, `TitleMark` |
 | `src/Button.tsx` | Pill button (cva): primary, secondary, ghost, accent, success, quiet · xs, sm, md |
@@ -101,7 +101,9 @@ const serif = PT_Serif({ subsets: ["latin", "latin-ext"], weight: ["400"], varia
 </html>
 ```
 
-Mark the main content area with `className="app-content"` for the text-size levels.
+Text size: put `<TextSizeSlider labels={{ label, valueText }} />` in the header (`valueText` may contain
+`{level}` and `{max}`). `THEME_SCRIPT` applies the stored level before paint; every level scales the root
+font size, so set font sizes in rem (all package sizes are rem), not px.
 
 **Components:**
 
